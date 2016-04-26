@@ -1,0 +1,4 @@
+items.json
+.scrapy
+*.pyc
+venv

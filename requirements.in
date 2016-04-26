@@ -1,0 +1,3 @@
+scrapy
+sqlalchemy
+psycopg2
