@@ -20,7 +20,9 @@ class HemnetItem(DeclarativeBase):
 
     id = Column(Integer, primary_key=True)
 
-    url = Column('url', String, index=True)
+    hemnet_id = Column('hemnet_id', Integer, index=True)
+
+    url = Column('url', String)
 
     broker_name = Column('broker_name', String, default='')
     broker_phone = Column('broker_phone', String, default='')

@@ -11,6 +11,8 @@ import scrapy
 class HemnetItem(scrapy.Item):
     url = scrapy.Field()
 
+    hemnet_id = scrapy.Field()
+
     broker_name = scrapy.Field()
     broker_phone = scrapy.Field()
 

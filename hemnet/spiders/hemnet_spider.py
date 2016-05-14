@@ -34,7 +34,7 @@ class HemnetSpider(scrapy.Spider):
         urls = response.css('#search-results li > div > a::attr("href")')
         for url in urls.extract():
             session = self.session
-            q = session.query(HemnetSQL).filter(HemnetSQL.url == url)
+            q = session.query(HemnetSQL).filter(HemnetSQL.hemnet_id == get_hemnet_id(url))
             if not session.query(q.exists()).scalar():
                 yield scrapy.Request(url, self.parse_detail_page)
 
@@ -45,7 +45,12 @@ class HemnetSpider(scrapy.Spider):
         property_attributes = get_property_attributes(response)
 
         item['url'] = response.url
-        item['type'] = urlparse(response.url).path.split('/')[2].split('-')[0]
+
+        slug = urlparse(response.url).path.split('/')[-1]
+
+        item['hemnet_id'] = get_hemnet_id(response.url)
+
+        item['type'] = slug.split('-')[0]
 
         raw_rooms = property_attributes.get(u'Antal rum', '').replace(u' rum', u'').replace(u',', u'.')
         try:
@@ -88,6 +93,11 @@ class HemnetSpider(scrapy.Spider):
         item['geographic_area'] = detail.css('.area::text').extract_first().strip().lstrip(u',').strip().rstrip(u',')
 
         yield item
+
+
+def get_hemnet_id(url):
+    slug = urlparse(url).path.split('/')[-1]
+    return int(slug.split('-')[-1])
 
 
 def get_selling_statistics(response, item):
