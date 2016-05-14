@@ -63,9 +63,9 @@ COOKIES_ENABLED = False
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'hemnet.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'hemnet.pipelines.HemnetPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -100,3 +100,12 @@ USER_AGENT_CHOICES = [
     'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0',
     'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:28.0) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2',
 ]
+
+DATABASE = {
+    'drivername': 'postgres',
+    'host': '127.0.0.1',
+    'port': '5432',
+    'username': 'scrape',
+    'password': 'scrape',
+    'database': 'scrape'
+}
