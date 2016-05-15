@@ -20,31 +20,31 @@ class HemnetItem(DeclarativeBase):
 
     id = Column(Integer, primary_key=True)
 
-    hemnet_id = Column('hemnet_id', Integer, index=True)
+    hemnet_id = Column(Integer, index=True)
 
-    url = Column('url', String)
+    url = Column(String)
 
-    broker_name = Column('broker_name', String, default='')
-    broker_phone = Column('broker_phone', String, default='')
-    broker_email = Column('broker_email', String, default='', index=True)
+    broker_name = Column(String, default='')
+    broker_phone = Column(String, default='')
+    broker_email = Column(String, default='', index=True)
 
-    broker_firm = Column('broker_firm', String, default='')
-    broker_firm_phone = Column('broker_firm_phone', String, default='')
+    broker_firm = Column(String, default='')
+    broker_firm_phone = Column(String, default='')
 
-    sold_date = Column('sold_date', Date, nullable=True)
+    sold_date = Column(Date, nullable=True)
 
-    price_per_square_meter = Column('price_per_square_meter', Float, nullable=True)
-    price = Column('price', Integer, nullable=True)
-    asked_price = Column('asked_price', Integer, nullable=True)
-    price_trend_flat = Column('price_trend_flat', Integer, nullable=True)
-    price_trend_percentage = Column('price_trend_percentage', Integer, nullable=True)
+    price_per_square_meter = Column(Float, nullable=True)
+    price = Column(Integer, nullable=True)
+    asked_price = Column(Integer, nullable=True)
+    price_trend_flat = Column(Integer, nullable=True)
+    price_trend_percentage = Column(Integer, nullable=True)
 
-    rooms = Column('rooms', Float, nullable=True)
-    monthly_fee = Column('monthly_fee', Integer, nullable=True)
-    square_meters = Column('square_meters', Float, nullable=True)
-    cost_per_year = Column('cost_per_year', Integer, nullable=True)
-    year = Column('year', String, default='')
-    type = Column('type', String, default='')
+    rooms = Column(Float, nullable=True)
+    monthly_fee = Column(Integer, nullable=True)
+    square_meters = Column(Float, nullable=True)
+    cost_per_year = Column(Integer, nullable=True)
+    year = Column(String, default='')
+    type = Column(String, default='')
 
-    address = Column('address', String, default='')
-    geographic_area = Column('geographic_area', String, default='')
+    address = Column(String, default='')
+    geographic_area = Column(String, default='')
