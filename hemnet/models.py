@@ -26,8 +26,10 @@ class HemnetItem(DeclarativeBase):
 
     broker_name = Column('broker_name', String, default='')
     broker_phone = Column('broker_phone', String, default='')
+    broker_email = Column('broker_email', String, default='')
 
     broker_firm = Column('broker_firm', String, default='')
+    broker_firm_phone = Column('broker_firm_phone', String, default='')
 
     sold_date = Column('sold_date', Date, nullable=True)
 

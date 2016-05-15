@@ -4,6 +4,7 @@ from urlparse import urlparse
 import re
 import scrapy
 from hemnet.items import HemnetItem
+from scrapy import Selector
 
 from sqlalchemy.orm import sessionmaker
 
@@ -41,7 +42,7 @@ class HemnetSpider(scrapy.Spider):
     def parse_detail_page(self, response):
         item = HemnetItem()
 
-        broker = response.css('.broker-info > p')[0]
+        broker = response.css('.broker-info > p')[0]  # type: Selector
         property_attributes = get_property_attributes(response)
 
         item['url'] = response.url
@@ -78,7 +79,19 @@ class HemnetSpider(scrapy.Spider):
         item['broker_name'] = broker.css('strong::text').extract_first()
         item['broker_phone'] = strip_phone(broker.css('.phone-number::attr("href")').extract_first())
 
-        item['broker_firm'] = response.css('.broker-info > p')[1].css('strong::text').extract_first()
+        try:
+            email = broker.xpath("a[contains(@href, 'mailto:')]/@href").extract_first().replace(u'mailto:', u'')
+            item['broker_email'] = email
+        except AttributeError:
+            pass
+
+        broker_firm = response.css('.broker-info > p')[1]  # type: Selector
+        item['broker_firm'] = broker_firm.css('strong::text').extract_first()
+        try:
+            firm_phone = broker_firm.xpath("a[contains(@href, 'tel:')]/@href").extract_first()
+            item['broker_firm_phone'] = firm_phone.replace(u'tel:', u'')
+        except AttributeError:
+            pass
 
         raw_price = response.css('.sold-property-price > span::text').extract_first()
         item['price'] = price_to_int(raw_price)

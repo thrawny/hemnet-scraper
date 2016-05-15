@@ -15,8 +15,10 @@ class HemnetItem(scrapy.Item):
 
     broker_name = scrapy.Field()
     broker_phone = scrapy.Field()
+    broker_email = scrapy.Field()
 
     broker_firm = scrapy.Field()
+    broker_firm_phone = scrapy.Field()
 
     sold_date = scrapy.Field()
 
