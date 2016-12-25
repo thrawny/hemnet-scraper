@@ -15,21 +15,25 @@ from hemnet.models import HemnetItem as HemnetSQL, db_connect, create_hemnet_tab
 BASE_URL = 'http://www.hemnet.se/salda/bostader?'
 
 
-def start_urls(stop):
-    return ['{}&page={}'.format(BASE_URL, x) for x in xrange(1, stop)]
+def start_urls(start, stop):
+    return ['{}&page={}'.format(BASE_URL, x) for x in xrange(start, stop)]
 
 
 class HemnetSpider(scrapy.Spider):
     name = 'hemnetspider'
     rotate_user_agent = True
 
-    start_urls = start_urls(10)
-
-    def __init__(self, name=None, **kwargs):
-        super(HemnetSpider, self).__init__(name, **kwargs)
+    def __init__(self, start=1, stop=10, *args, **kwargs):
+        super(HemnetSpider, self).__init__(*args, **kwargs)
+        self.start = int(start)
+        self.stop = int(stop)
         engine = db_connect()
         create_hemnet_table(engine)
         self.session = sessionmaker(bind=engine)()
+
+    def start_requests(self):
+        for url in start_urls(self.start, self.stop):
+            yield scrapy.Request(url, self.parse)
 
     def parse(self, response):
         urls = response.css('#search-results li > div > a::attr("href")')

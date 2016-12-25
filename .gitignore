@@ -2,3 +2,7 @@ items.json
 .scrapy
 *.pyc
 venv
+build
+crawls
+project.egg-info
+eggs

@@ -1,3 +1,5 @@
 scrapy
+scrapyd
+scrapyd-client
 sqlalchemy
 psycopg2

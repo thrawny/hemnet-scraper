@@ -4,7 +4,6 @@ SELECT DISTINCT(COUNT(hemnet_id)) FROM hemnet_items;
 
 SELECT * FROM hemnet_items ORDER BY sold_date DESC LIMIT 20;
 
-
 -- Brokers with same name but different emails.
 SELECT DISTINCT ON (h1.broker_email)
   h1.broker_email,
@@ -19,7 +18,8 @@ WHERE h1.broker_email != h2.broker_email;
 -- Top seller
 SELECT
   broker_email,
-  sum(price) AS total
+  sum(price) AS total,
+  count(broker_email)
 FROM hemnet_items
 GROUP BY broker_email
 ORDER BY total DESC;
@@ -34,13 +34,19 @@ WHERE geographic_area LIKE '%Göteborg%' AND sold_date > '2016-01-01'
 GROUP BY broker_email
 ORDER BY objects_sold DESC;
 
--- Rooms and area
-SELECT broker_email, sum(price) AS total FROM hemnet_items
-WHERE rooms BETWEEN 2 AND 3 AND geographic_area LIKE '%Borlänge%'
-GROUP BY broker_email ORDER BY total DESC;
 
-SELECT * FROM hemnet_items
-WHERE rooms BETWEEN 2 AND 3 AND geographic_area LIKE '%Skräddarbacken%';
+-- Rooms and area
+SELECT
+  broker_email,
+  sum(price) AS total
+FROM hemnet_items
+WHERE rooms BETWEEN 2 AND 3 AND geographic_area LIKE '%Borlänge%'
+GROUP BY broker_email
+ORDER BY total DESC;
+
+SELECT *
+FROM hemnet_items
+WHERE rooms BETWEEN 2 AND 2.6 AND geographic_area LIKE '%Guldheden%';
 
 SELECT url FROM hemnet_items WHERE broker_email = '';
 
@@ -54,7 +60,5 @@ WHERE hemnet_items.address LIKE '%Andra Långgatan 28%' AND sold_date > '2012-01
 SELECT * FROM hemnet_items WHERE geographic_area LIKE '%Göteborg%';
 SELECT COUNT(*) FROM hemnet_items WHERE geographic_area LIKE '%Stockholm%';
 SELECT COUNT(*) FROM hemnet_items;
-
-
 
 SELECT DISTINCT type FROM hemnet_items;
