@@ -82,16 +82,17 @@ AUTOTHROTTLE_DEBUG = False
 # Enable and configure HTTP caching (disabled by default)
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
 
-if os.environ.get('SCRAPY_HTTP_CACHE', True):
-    HTTPCACHE_ENABLED = True
-    HTTPCACHE_EXPIRATION_SECS = 0
-    HTTPCACHE_DIR = 'httpcache'
-    HTTPCACHE_IGNORE_HTTP_CODES = []
-    HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+# HTTPCACHE_ENABLED = bool(os.environ.get('SCRAPY_HTTP_CACHE', True))
+HTTPCACHE_ENABLED = False
+HTTPCACHE_EXPIRATION_SECS = 0
+HTTPCACHE_DIR = 'httpcache'
+HTTPCACHE_IGNORE_HTTP_CODES = []
+HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 
 DOWNLOADER_MIDDLEWARES = {
     'hemnet.middlewares.RotateUserAgentMiddleware': 110,
+    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110
 }
 
 USER_AGENT_CHOICES = [
@@ -107,7 +108,7 @@ USER_AGENT_CHOICES = [
 
 DATABASE = {
     'drivername': 'postgres',
-    'host': '127.0.0.1',
+    'host': 'postgres',
     'port': '5432',
     'username': 'scrape',
     'password': 'scrape',
